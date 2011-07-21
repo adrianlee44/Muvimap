@@ -3,5 +3,6 @@ img {
     margin-right: 10px;
 }
 .entry {
-    margin: 10px 10px;   
+    margin: 10px 10px;
+    list-style: none; 
 }

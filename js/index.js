@@ -6,8 +6,8 @@ $(document).ready(function() {
     $('#search').width(200);
     $('#go').click(function() {
         var query = $('#search').val();
-        console.log();
         $('.entries').html('');
+        $('#locations').html('');
         search(baseUrl + encodeURI(query));
         $('#title').show().children('.movieTitle').html(query);
         $('#locations').append('<h1>Locations for ' + query + '</h2>');
@@ -32,7 +32,6 @@ function search(url) {
                 var params = json.next_page + '';
                 console.log(searchBase + params + '&callback=?');
                 search(searchBase + params + '&callback=?');
-
             });
         }
         else {
