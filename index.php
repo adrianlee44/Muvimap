@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		<div id="content" class="container_12">
-			<input type="text" id="search" /><button id="go">Go!</button>
+			<input type="text" id="search" /><button id="go">Go!</button><input type="checkbox" id="localtweets"/>Local tweets only
 			<h1 id="title">Tweets about <span class='movieTitle'></span></h1>
 			<ul class='entries'>
 			</ul>
