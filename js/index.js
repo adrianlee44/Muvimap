@@ -15,7 +15,6 @@ $(document).ready(function() {
 				navigator.geolocation.getCurrentPosition(function(pos) {
 					$('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
 					search(baseUrl + encodeURI(query) + '&geocode=' + pos.coords.latitude + ',' + pos.coords.longitude + ',20mi');
-					//alert(baseUrl + encodeURI(query) + '&geocode=' + pos.coords.latitude + ',' + pos.coords.longitude + ',20mi');
 				});
 			}
 			else {
