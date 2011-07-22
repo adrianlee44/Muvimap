@@ -6,9 +6,13 @@ $(document).ready(function() {
     $('#search').width(200);
     $('#go').click(function() {
         var query = $('#search').val();
+        if (query == '' || typeof(query) == undefined) {
+            return;
+        }
         $('.entries').html('');
         $('#locations').html('');
         search(baseUrl + encodeURI(query));
+        loadRTreviews(query);
         $('#title').show().children('.movieTitle').html(query);
         $('#locations').append('<h1>Locations for ' + query + '</h2>');
     });
