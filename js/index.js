@@ -11,6 +11,9 @@ $(document).ready(function() {
         search(baseUrl + encodeURI(query));
         $('#title').show().children('.movieTitle').html(query);
         $('#locations').append('<h1>Locations for ' + query + '</h2>');
+		var coords = getLocation();
+		$('#title').append('near (' + coords.latitude + ', ' + coords.longitude + ')');
+		
     });
     $('#go').click();
 });
@@ -38,4 +41,17 @@ function search(url) {
             $('#more').hide();
         }
     });
+}
+
+function getLocation() {
+	if (navigator.geolocation) {
+		var coords;
+		navigator.geolocation.getCurrentPosition(function(pos) {
+			coords = pos.coords;
+		});
+		return coords;
+	}
+	else {
+		alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
+	}
 }

@@ -11,10 +11,9 @@
 		<script type="text/javascript" src="js/index.js"></script>
 	</head>
 	<body>
-		
 		<div id="content" class="container_12">
 			<input type="text" id="search" /><button id="go">Go!</button>
-			<h1 id="title">Tweets about <span class='movieTitle'>Star Wars</span></h1>
+			<h1 id="title">Tweets about <span class='movieTitle'></span></h1>
 			<ul class='entries'>
 			</ul>
 			<a href="#" id="more">next</a>
