@@ -22,6 +22,7 @@ function rottenTomatoes(json){
     self.score = 0;
     self.reviewJson = [];
     self.synopsis = "";
+    _.reviewNum = 0;
 
     self.init = function(){
         var first = _.mjson.movies[0];
@@ -44,6 +45,7 @@ function rottenTomatoes(json){
             $.getJSON(url, function(data){
                 _.scoreMovie(data.reviews);
                 self.reviewJson = self.reviewJson.concat(data.reviews);
+                _.reviewNum = data.total;
                 if (data.links.next!=""){
                     self.loadRTreviews(data.links.next+"&apikey="+_.rtKey+"&callback=?");
                 }
@@ -61,7 +63,7 @@ function rottenTomatoes(json){
             } else {
                 self.score--;
             }
-            $("#rtS").html("RottenTomates: " + (self.score/i).toFixed(2));
+            $("#rtS").html("RottenTomates: " + ((self.score/_.reviewNum)*100).toFixed(2));
         });
     }
 
