@@ -44,7 +44,7 @@ $(document).ready(function() {
         }
     });
 
-    if (_GET['q'] != '' && typeof(_GET['q']) != undefined){
+    if (_GET['q'] != '' && typeof(_GET['q']) != undefined && _GET['q'] != undefined){
         processMovie(decodeURI(_GET['q']), localpos);
     }
 
