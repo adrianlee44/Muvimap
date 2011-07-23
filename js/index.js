@@ -11,46 +11,63 @@ var FS_venueSearch = "https://api.foursquare.com/v2/venues/search"
 var rt;
 
 $(document).ready(function() {
+    var _GET = getUrlVars();
+    console.log(_GET["q"]);
+
     $('#title').hide();
     $('#more').hide();
 
+    inTheaterMovie($("#topMovieBox"));
+    $("#ddBtn").click(function(){
+        if ($("#topMovieBox").is(':visible')){
+            $("#topMovieBox").slideUp("slow");
+        } else {
+            $("#topMovieBox").slideDown("slow");
+        }
+    });
+
+    if (_GET['q'] != '' && typeof(_GET['q']) != undefined){
+        processMovie(decodeURI(_GET['q']));
+    }
+
     $('#searchBtn').click(function() {
         var query = $('#search').val();
-
         if (query == '' || typeof(query) == undefined) {
             return;
         }
-
-        $('.entries').html('');
-        $('#locations').html('');
-
-        if ($('#localtweets').is(':checked')) {
-            if (navigator.geolocation){
-                navigator.geolocation.getCurrentPosition(function(pos) {
-                    $('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
-                    locationBased(query, pos.coords);
-               });
-            } else {
-                alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
-            }
-        } else {
-            searchtwitter(baseUrl + encodeURI(query));
-        }
-
-        // rotten tomatoes code
-        $.getJSON(movieSearch,{
-                apikey: rtKey,
-                q: query
-            }, function(data){
-                rt = new rottenTomatoes(data);
-                rt.init();
-                console.log(rt);
-            });
-
-        $('#title').show().children('.movieTitle').html(query);
-        $('#locations').append('<h1>Locations for ' + query + '</h2>');
+        processMovie(query);
     });
 });
+
+function processMovie(movie){
+    $('.entries').html('');
+    $('#locations').html('');
+    if ($('#localtweets').is(':checked')) {
+        if (navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                $('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
+                locationBased(query, pos.coords);
+           });
+        } else {
+            alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
+        }
+    } else {
+        searchtwitter(baseUrl + encodeURI(movie));
+    }
+
+    // rotten tomatoes code
+    $.getJSON(movieSearch,{
+            apikey: rtKey,
+            q: movie
+        }, function(data){
+            rt = new rottenTomatoes(data);
+            rt.init();
+            console.log(rt);
+        });
+
+    $('#title').show().children('.movieTitle').html(movie);
+    $('#locations').append('<h1>Locations for ' + movie + '</h2>');
+}
 
 function locationBased(query, pos){
     // foursquare code
@@ -66,4 +83,18 @@ function locationBased(query, pos){
 
     // twitter code
     searchtwitter(baseUrl + encodeURI(query) + "&geocode=" + pos.latitude + ',' + pos.longitude + ',20mi');
+}
+
+// Read a page's GET URL variables and return them as an associative array.
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
 }
