@@ -1,29 +1,48 @@
 var baseUrl = 'http://search.twitter.com/search.json?callback=?&q=';
 var searchBase = 'http://search.twitter.com/search.json';
+var rtKey = "6gga7w7f7fmmebmuujqg6jdj";
+var RTbaseUrl = "http://api.rottentomatoes.com/api/public/v1.0";
+var movieSearch = RTbaseUrl + "/movies.json?callback=?";
+var rt;
 $(document).ready(function() {
     $('#title').hide();
     $('#more').hide();
     $('#search').width(200);
     $('#go').click(function() {
         var query = $('#search').val();
+        if (query == '' || typeof(query) == undefined) {
+            return;
+        }
         $('.entries').html('');
         $('#locations').html('');
+        search(baseUrl + encodeURI(query));
+
+        // rotten tomatoes code
+        $.getJSON(movieSearch,{
+                apikey: rtKey,
+                q: query
+            }, function(data){
+                rt = new rottenTomatoes(data);
+                rt.init();
+                console.log(rt);
+            });
+
         $('#title').show().children('.movieTitle').html(query);
         $('#locations').append('<h1>Locations for ' + query + '</h2>');
-		if ($('#localtweets').is(':checked')) {
-			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(function(pos) {
-					$('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
-					search(baseUrl + encodeURI(query) + '&geocode=' + pos.coords.latitude + ',' + pos.coords.longitude + ',20mi');
-				});
-			}
-			else {
-					alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
-			}		
-		}
-		else {
-			search(baseUrl + encodeURI(query));
-		}
+        if ($('#localtweets').is(':checked')) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(pos) {
+                    $('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
+                    search(baseUrl + encodeURI(query) + '&geocode=' + pos.coords.latitude + ',' + pos.coords.longitude + ',20mi');
+                });
+            }
+            else {
+                    alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
+            }
+        }
+        else {
+            search(baseUrl + encodeURI(query));
+        }
     });
 });
 
