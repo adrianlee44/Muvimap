@@ -61,6 +61,7 @@ function rottenTomatoes(json){
             } else {
                 self.score--;
             }
+            $("#rtS").html("RottenTomates: " + (self.score/i).toFixed(2));
         });
     }
 

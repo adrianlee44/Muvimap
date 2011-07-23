@@ -91,6 +91,15 @@ a{
 #miBtn{top: 50%; position: absolute;}
 #castList{ list-style: none;}
 
+#posterImg{
+    width: 125px;
+    float: left;
+}
+#scoresInfo{
+    width: 150px;
+    float: left;
+}
+
 .float{float: left;}
 .small{ font-size: 9pt; }
 .medium{ font-size: 10pt;}

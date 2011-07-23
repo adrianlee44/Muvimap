@@ -13,8 +13,17 @@ var rt;
 $(document).ready(function() {
     var _GET = getUrlVars();
     console.log(_GET["q"]);
+    var localpos = {};
     var latlng = new google.maps.LatLng(39.504041,-96.855469);
     var map = new google.maps.Map(document.getElementById("map_canvas"),{zoom: 4, center:latlng, mapTypeId: google.maps.MapTypeId.ROADMAP});
+
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            localpos = pos;
+       });
+    } else {
+        alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
+    }
 
     inTheaterMovie($("#topMovieBox"));
     $("#ddBtn").click(function(){
@@ -36,7 +45,7 @@ $(document).ready(function() {
     });
 
     if (_GET['q'] != '' && typeof(_GET['q']) != undefined){
-        processMovie(decodeURI(_GET['q']));
+        processMovie(decodeURI(_GET['q']), localpos);
     }
 
     $('#searchBtn').click(function() {
@@ -44,20 +53,17 @@ $(document).ready(function() {
         if (query == '' || typeof(query) == undefined) {
             return;
         }
-        processMovie(query);
+        processMovie(query, localpos);
     });
 });
 
-function processMovie(movie){
-    $('.entries').html('');
-    $('#locations').html('');
-    if (navigator.geolocation){
+function processMovie(movie, tpos){
+    if (tpos.coords==undefined && navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function(pos) {
-            $('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
             locationBased(movie, pos);
        });
     } else {
-        alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
+        locationBased(movie, tpos);
     }
 
     // rotten tomatoes code
@@ -71,8 +77,9 @@ function processMovie(movie){
             box.html("");
             var poster = new Image();
             poster.src = rt.posters;
-            box.append(poster);
-            box.append("<div>" + rt.title + " (" + rt.year + ")</div>");
+            box.append("<div id='posterScore'><div id='posterImg'></div><div id='scoresInfo'><span id='twitterS'></span><br /><span id='rtS'></span></div><div class='clear'></div></div>");
+            $("#posterImg").append(poster);
+            box.append("<div id='movietName'>" + rt.title + " (" + rt.year + ")</div>");
             box.append("<div class='small'>"+ rt.synopsis +"</div>")
             box.append("<div class='medium'>Runtime: " + rt.runtime + " min</div>" )
             box.append("<div class='medium'>Rating: " + rt.rating + "</div>")
@@ -81,6 +88,7 @@ function processMovie(movie){
             for (var i in rt.mainCast){
                 clist.append("<li>" + rt.mainCast[i]["name"] + " - " + rt.mainCast[i]["characters"][0] + "</li>");
             }
+            $("#rtS").html("RottenTomates: " + rt.score);
         });
 
     $('#title').show().children('.movieTitle').html(movie);
@@ -103,7 +111,8 @@ function locationBased(query, pos){
     $('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
     var map = new GoogleMap(document.getElementById("map_canvas"), pos.coords.latitude, pos.coords.longitude);
     var score = new TwitterScore();
-	searchTwitter(baseUrl + encodeURI(query) + '&geocode=' + pos.coords.latitude + ',' + pos.coords.longitude + ',20mi', map, score, 20);
+    searchTwitter(baseUrl + encodeURI(query) + '&geocode=' + pos.coords.latitude + ',' + pos.coords.longitude + ',20mi', map, score, 20);
+
 }
 
 // Read a page's GET URL variables and return them as an associative array.
