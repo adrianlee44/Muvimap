@@ -64,3 +64,21 @@ function rottenTomatoes(json){
 
     return self;
 }
+
+function inTheaterMovie(container){
+    var url = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?callback=?";
+    var json = {};
+    $.getJSON(url,{
+        page_limit: 10,
+        apikey: "6gga7w7f7fmmebmuujqg6jdj"
+    }, function(data){
+        var movieList = [];
+        json = data;
+        $.each(data.movies, function(i, movie){
+            container.append("<ol id='movieList'></ol>");
+            var list = $("#movieList");
+            list.append("<li><a href='index.html?q=" + encodeURI(movie.title) + "'>" + movie.title + "</a></li>")
+        });
+    });
+    return json;
+}

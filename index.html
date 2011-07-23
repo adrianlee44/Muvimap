@@ -1,23 +1,56 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<title>MuviMap</title>
-		<style type="text/css">
-			html { height: 100% }
-			body { height: 100%; margin: 0px; padding: 0px }
-		</style>
-		
-		<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
-		<script type="text/javascript" src="js/rottentomatoes.js"></script>
-		<script type="text/javascript" src="js/index.js"></script>
-		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-		<script type="text/javascript" src="js/twitter.js"></script>
-		<script type="text/javascript" src="js/googlemap.js"></script>
-	</head>
-	<body>
-		<input type="text" id="search"/><button id="go">Go!</button><input type="checkbox" id="localtweets"/>Local tweets only
-		<div id="map_canvas" style="width:100%; height:94%"></div>
-		<a href="#" id="more">More Tweets</a>
-	</body>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <title>MuviMap</title>
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/grid.css">
+        <link rel="stylesheet" href="css/style.css">
+
+        <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+        <script type="text/javascript" src="js/rottentomatoes.js"></script>
+        <script type="text/javascript" src="js/twitter.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript" src="js/googlemap.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+
+    </head>
+    <body>
+        <div id="header">
+            <div class="container_12 titleMargin">
+                <div id="siteTitle" class="grid_5">
+                    <img src="image/logo.png" alt="muvimap" />
+                </div>
+                <div class="grid_4 small">
+                    What is MuviMap?<br />
+                    MuviMap (MvM) is a webpage that leverages Twitter, RottenTomatoes,
+                    and geolocation APIs to deliver geocgraphically localized reviews and popular sentiments about current movies within the context of a Google map.
+                </div>
+                <div class="grid_3">
+                    <div id="searchBar">
+                        <input type="text" id="search" name="q" /><img id="searchBtn" src="image/search.png" alt="Search" />
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="container_12">
+                <div id="ddWrapper" class="small">
+                    <div id="topMovieBox" class="medium roundBorder"></div>
+                    <span class="roundBorder"><a href="#" id="ddBtn">Top Movies</a></span>
+                </div>
+            </div>
+
+        </div>
+        <div id="map_canvas" style="width:100%; height:94%"></div>
+        <a href="#" id="more">More Tweets</a>
+        <div id="content" class="container_12">
+            <input type="checkbox" id="localtweets"/>Local tweets only
+            <h1 id="title">Tweets about <span class='movieTitle'>Star Wars</span></h1>
+            <ul class='entries'>
+            </ul>
+            <a href="#" id="more">next</a>
+            <div id="locations"></div>
+        </div>
+    </body>
 </html>

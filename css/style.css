@@ -1,8 +1,86 @@
+body{
+    font-family: Arial, Lucida Sans Unicode;
+    font-size: 14pt;
+    color: #EEE;
+    background: #74B5E8;
+}
+
+a{
+    text-decoration: none;
+    color: #FFF;
+}
+
+#header{
+    background: url('../image/filmstrip-shadowed.png') repeat-x;
+    width: 100%;
+    height: 117px;
+    padding: 48px 0px;
+}
+
+.content{
+    margin: 0px auto;
+    width: 1020px;
+}
+
+.titleMargin{
+    margin-bottom: 45px;
+}
+
+#siteTitle{
+    font-size: 60pt;
+}
+
+#searchBar{
+    clear: both;
+}
+
+#searchBar #search{
+    width: 150px;
+    border: none;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    height: 20px;
+    padding: 0px 8px;
+    margin: 0px 8px;
+    float: left;
+}
+
+#ddWrapper{
+    position: absolute;
+}
+
+#ddWrapper span{
+    background: #404040;
+    width: 80px;
+    text-align: center;
+    padding: 5px;
+}
+
+#ddWrapper a:hover{
+    color: #F7931E;
+}
+
+#topMovieBox{
+    background: #404040;
+    padding: 15px;
+    width: 250px;
+    display: none;
+
+}
+
+#movieList{
+    padding: 0px 20px;
+}
+
+.small{ font-size: 9pt; }
+.medium{ font-size: 10pt;}
+.roundBorder{ -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+
 img {
     display: block;
     margin-right: 10px;
 }
 .entry {
     margin: 10px 10px;
-    list-style: none; 
+    list-style: none;
 }
