@@ -61,7 +61,7 @@ a{
 }
 
 #topMovieBox{
-    background: #404040;
+    background: rgba(64,64,64,0.75);
     padding: 15px;
     width: 250px;
     display: none;
@@ -78,21 +78,31 @@ a{
     height: 100%;
 }
 
-#movieInfo{
-    width:200px;
+#movieInfoWrapper{
     height: 100%;
     position: absolute;
     right: 0px;
-    z-index: 999;
-    background: #404040;
+    background: rgba(64,64,64,0.75);
     margin-top:-30px;
-    padding: 10px;
+    padding: 10px 2px;
 }
 
+#movieInfo{ display: none;}
+
+#movieInfo div{ margin: 5px 0px;}
+
+#miBtnWrapper{
+    width: 8px;
+    height: 100%;
+}
+#miBtn{top: 50%; position: absolute;}
+#castList{ list-style: none;}
+
+.float{float: left;}
 .small{ font-size: 9pt; }
 .medium{ font-size: 10pt;}
 .roundBorder{ -moz-border-radius: 5px; -webkit-border-radius: 5px;}
-.trans75 {opacity: 0.75}
+.center{ text-align: center}
 
 img {
     display: block;

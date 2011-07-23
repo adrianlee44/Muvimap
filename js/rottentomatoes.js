@@ -21,18 +21,20 @@ function rottenTomatoes(json){
     self.releaseDate = "";
     self.score = 0;
     self.reviewJson = [];
+    self.synopsis = "";
 
     self.init = function(){
         var first = _.mjson.movies[0];
         self.ID = first.id;
         self.rating = first.mpaa_rating;
-        self.posters = first.posters.original;
+        self.posters = first.posters.profile;
         self.mainCast = first.abridged_cast;
         self.critic = first.critics_consensus;
         self.runtime = first.runtime;
         self.title = first.title;
         self.year = first.year;
         self.releaseDate = first.release_dates.theater;
+        self.synopsis = first.synopsis;
         var reviewsURL = _.RTbaseUrl+"/movies/"+self.ID+"/reviews.json?review_type=all&page_limit=50&country=us&page=1&callback=?&apikey="+_.rtKey
         self.loadRTreviews(reviewsURL);
     }
