@@ -13,9 +13,8 @@ var rt;
 $(document).ready(function() {
     $('#title').hide();
     $('#more').hide();
-    $('#search').width(200);
 
-    $('#go').click(function() {
+    $('#searchBtn').click(function() {
         var query = $('#search').val();
 
         if (query == '' || typeof(query) == undefined) {

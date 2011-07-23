@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Muvi Map</title>
+        <title>MuviMap</title>
         <link rel="stylesheet" href="css/reset.css">
         <link rel="stylesheet" href="css/grid.css">
         <link rel="stylesheet" href="css/style.css">
@@ -14,14 +14,36 @@
 
     </head>
     <body>
+        <div id="header">
+            <div class="container_12">
+                <div id="siteTitle" class="grid_5">
+                    <img src="image/logo.png" alt="muvimap" />
+                </div>
+                <div class="grid_4 small">
+                    What is MuviMap?<br />
+                    MuviMap (MvM) is a webpage that leverages Twitter, RottenTomatoes,
+                    and geolocation APIs to deliver geocgraphically localized reviews and popular sentiments about current movies within the context of a Google map.
+                </div>
+                <div class="grid_3">
+                    <div id="searchBar">
+                        <input type="text" id="search" name="q" /><img id="searchBtn" src="image/search.png" alt="Search" />
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
 
         <div id="content" class="container_12">
-            <input type="text" id="search" /><button id="go">Go!</button><input type="checkbox" id="localtweets"/>Local tweets only
+            <input type="checkbox" id="localtweets"/>Local tweets only
             <h1 id="title">Tweets about <span class='movieTitle'>Star Wars</span></h1>
             <ul class='entries'>
             </ul>
             <a href="#" id="more">next</a>
             <div id="locations"></div>
+        </div>
+
+        <div id="map_canvas">
+
         </div>
 
     </body>
