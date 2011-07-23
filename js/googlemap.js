@@ -1,4 +1,4 @@
-function GoogleMap(element,lat, lng) {
+function GoogleMap(element, lat, lng) {
     var currentPos = new google.maps.LatLng(lat, lng);
     var myOptions = {
 		zoom: 8,

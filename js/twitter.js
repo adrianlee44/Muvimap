@@ -11,7 +11,7 @@ function searchTwitter(url, map) {
                 e.preventDefault();
                 var params = json.next_page + '';
                 console.log(searchBase + params + '&callback=?');
-                search(searchBase + params + '&callback=?', map);
+                searchTwitter(searchBase + params + '&callback=?', map);
             });
         }
         else {
