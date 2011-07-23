@@ -13,8 +13,8 @@ var rt;
 $(document).ready(function() {
     var _GET = getUrlVars();
     console.log(_GET["q"]);
-
-    $('#title').hide();
+    var latlng = new google.maps.LatLng(39.504041,-96.855469);
+    var map = new google.maps.Map(document.getElementById("map_canvas"),{zoom: 4, center:latlng, mapTypeId: google.maps.MapTypeId.ROADMAP});
 
     inTheaterMovie($("#topMovieBox"));
     $("#ddBtn").click(function(){
@@ -22,6 +22,16 @@ $(document).ready(function() {
             $("#topMovieBox").slideUp("slow");
         } else {
             $("#topMovieBox").slideDown("slow");
+        }
+    });
+
+    $("#miBtn").click(function(){
+        if ($("#movieInfo").is(':visible')){
+            $("#movieInfo").animate({width: "0px"}, 1000).hide();
+            $("#miBtn").html("<");
+        } else {
+            $("#movieInfo").animate({width: "300px"}, 1000).show();
+            $("#miBtn").html(">");
         }
     });
 
@@ -57,7 +67,20 @@ function processMovie(movie){
         }, function(data){
             rt = new rottenTomatoes(data);
             rt.init();
-            console.log(rt);
+            var box = $("#movieInfo");
+            box.html("");
+            var poster = new Image();
+            poster.src = rt.posters;
+            box.append(poster);
+            box.append("<div>" + rt.title + " (" + rt.year + ")</div>");
+            box.append("<div class='small'>"+ rt.synopsis +"</div>")
+            box.append("<div class='medium'>Runtime: " + rt.runtime + " min</div>" )
+            box.append("<div class='medium'>Rating: " + rt.rating + "</div>")
+            box.append("<ul id='castList' class='small'></ul>");
+            var clist = $("#castList");
+            for (var i in rt.mainCast){
+                clist.append("<li>" + rt.mainCast[i]["name"] + " - " + rt.mainCast[i]["characters"][0] + "</li>");
+            }
         });
 
     $('#title').show().children('.movieTitle').html(movie);

@@ -17,17 +17,8 @@ a{
     padding: 48px 0px;
 }
 
-.content{
-    margin: 0px auto;
-    width: 1020px;
-}
-
 .titleMargin{
     margin-bottom: 45px;
-}
-
-#siteTitle{
-    font-size: 60pt;
 }
 
 #searchBar{
@@ -47,6 +38,7 @@ a{
 
 #ddWrapper{
     position: absolute;
+    z-index: 999;
 }
 
 #ddWrapper span{
@@ -61,20 +53,49 @@ a{
 }
 
 #topMovieBox{
-    background: #404040;
+    background: rgba(64,64,64,0.75);
     padding: 15px;
     width: 250px;
     display: none;
-
 }
 
 #movieList{
     padding: 0px 20px;
 }
 
+#map_canvas{
+    margin-top: -30px;
+    width: 100%;
+    height: 100%;
+    color: #111111;
+}
+
+#movieInfoWrapper{
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    background: rgba(64,64,64,0.75);
+    margin-top:-30px;
+    padding: 10px 2px;
+    z-index: 999;
+}
+
+#movieInfo{ display: none;}
+
+#movieInfo div{ margin: 5px 0px;}
+
+#miBtnWrapper{
+    width: 8px;
+    height: 100%;
+}
+#miBtn{top: 50%; position: absolute;}
+#castList{ list-style: none;}
+
+.float{float: left;}
 .small{ font-size: 9pt; }
 .medium{ font-size: 10pt;}
 .roundBorder{ -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+.center{ text-align: center}
 
 img {
     display: block;
