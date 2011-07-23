@@ -79,7 +79,7 @@ function locationBased(query, pos){
     // twitter code
     $('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
     var map = new GoogleMap(document.getElementById("map_canvas"), pos.coords.latitude, pos.coords.longitude);
-    searchTwitter(baseUrl + encodeURI(query) + '&geocode=' + pos.coords.latitude + ',' + pos.coords.longitude + ',20mi', map);
+    searchTwitter(baseUrl + encodeURI(query) + '&geocode=' + pos.coords.latitude + ',' + pos.coords.longitude + ',20mi', map, 20);
 }
 
 // Read a page's GET URL variables and return them as an associative array.
