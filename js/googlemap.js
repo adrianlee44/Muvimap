@@ -19,20 +19,6 @@ function GoogleMap(element, lat, lng) {
 	google.maps.event.addListener(hereMarker, 'click', function() {
 		hereInfo.open(map, hereMarker);
 	});
-	var layer = new google.maps.FusionTablesLayer({
-		query: {
-			select: 'geometry',
-			from: '531237'
-		},
-		styles: [{
-			where: "STATE_NAME = 'California'",
-			polygonOptions: {
-				fillColor: "#00FF00",
-				fillOpacity: 0.3
-			}
-		}]
-	});
-	layer.setMap(map);
 	this.addTweet = function(tweet) {
 		if (tweet.geo != null) {
 			var tweetPos = new google.maps.LatLng(tweet.geo.coordinates[0], tweet.geo.coordinates[1]);
