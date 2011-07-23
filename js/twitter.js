@@ -1,4 +1,4 @@
-function searchTwitter(url, map) {
+function searchTwitter(url, map, pages) {
     $.getJSON(url, function(json) {
         var locations = Array();
         $.each(json.results, function(i, tweet) {
@@ -7,12 +7,9 @@ function searchTwitter(url, map) {
         $('#locations').append('<p>' + locations + '</p>');
         if (json.next_page != null) {
             console.log(json.next_page);
-            $('#more').show().click(function(e) {
-                e.preventDefault();
-                var params = json.next_page + '';
-                console.log(searchBase + params + '&callback=?');
-                searchTwitter(searchBase + params + '&callback=?', map);
-            });
+			var params = json.next_page + '';
+			console.log(searchBase + params + '&callback=?');
+			searchTwitter(searchBase + params + '&callback=?', map, pages - 1);
         }
         else {
             $('#more').hide();
