@@ -15,7 +15,6 @@ $(document).ready(function() {
     console.log(_GET["q"]);
 
     $('#title').hide();
-    $('#more').hide();
 
     inTheaterMovie($("#topMovieBox"));
     $("#ddBtn").click(function(){
@@ -42,17 +41,13 @@ $(document).ready(function() {
 function processMovie(movie){
     $('.entries').html('');
     $('#locations').html('');
-    if ($('#localtweets').is(':checked')) {
-        if (navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(function(pos) {
-                $('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
-                locationBased(query, pos.coords);
-           });
-        } else {
-            alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
-        }
+    if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            $('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
+            locationBased(movie, pos);
+       });
     } else {
-        searchtwitter(baseUrl + encodeURI(movie));
+        alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
     }
 
     // rotten tomatoes code
