@@ -1,5 +1,9 @@
 var baseUrl = 'http://search.twitter.com/search.json?callback=?&q=';
 var searchBase = 'http://search.twitter.com/search.json';
+var rtKey = "6gga7w7f7fmmebmuujqg6jdj";
+var RTbaseUrl = "http://api.rottentomatoes.com/api/public/v1.0";
+var movieSearch = RTbaseUrl + "/movies.json?callback=?";
+var rt;
 $(document).ready(function() {
     $('#title').hide();
     $('#more').hide();
@@ -12,7 +16,17 @@ $(document).ready(function() {
         $('.entries').html('');
         $('#locations').html('');
         search(baseUrl + encodeURI(query));
-        loadRTreviews(query);
+
+        // rotten tomatoes code
+        $.getJSON(movieSearch,{
+                apikey: rtKey,
+                q: query
+            }, function(data){
+                rt = new rottenTomatoes(data);
+                rt.init();
+                console.log(rt);
+            });
+
         $('#title').show().children('.movieTitle').html(query);
         $('#locations').append('<h1>Locations for ' + query + '</h2>');
     });
