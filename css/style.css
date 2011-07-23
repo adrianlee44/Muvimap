@@ -65,16 +65,34 @@ a{
     padding: 15px;
     width: 250px;
     display: none;
-
 }
 
 #movieList{
     padding: 0px 20px;
 }
 
+#map_canvas{
+    margin-top: -30px;
+    z-index: -999;
+    width: 100%;
+    height: 100%;
+}
+
+#movieInfo{
+    width:200px;
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    z-index: 999;
+    background: #404040;
+    margin-top:-30px;
+    padding: 10px;
+}
+
 .small{ font-size: 9pt; }
 .medium{ font-size: 10pt;}
 .roundBorder{ -moz-border-radius: 5px; -webkit-border-radius: 5px;}
+.trans75 {opacity: 0.75}
 
 img {
     display: block;
