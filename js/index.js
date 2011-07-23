@@ -28,14 +28,13 @@ $(document).ready(function() {
         if ($('#localtweets').is(':checked')) {
             if (navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(function(pos) {
-                    $('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
-                    locationBased(query, pos.coords);
-               });
+                    locationBased(query, pos);
+				});
             } else {
                 alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
             }
         } else {
-            searchtwitter(baseUrl + encodeURI(query));
+            searchTwitter(baseUrl + encodeURI(query));
         }
 
         // rotten tomatoes code
@@ -60,11 +59,13 @@ function locationBased(query, pos){
         client_secret: FS_client_secret,
         categoryId: "4bf58dd8d48988d17f941735",
         limit: 50,
-        ll: pos.latitude + ',' + pos.longitude
+        ll: pos.coords.latitude + ',' + pos.coords.longitude
     }, function(data){
         console.log(data);
     });
 
     // twitter code
-    searchtwitter(baseUrl + encodeURI(query) + "&geocode=" + pos.latitude + ',' + pos.longitude + ',20mi');
+    $('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
+	var map = new GoogleMap(document.getElementById("map_canvas"), pos.coords.latitude, pos.coords.longitude);
+	searchTwitter(baseUrl + encodeURI(query) + '&geocode=' + pos.coords.latitude + ',' + pos.coords.longitude + ',20mi', map);
 }

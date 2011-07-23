@@ -1,11 +1,8 @@
-function searchtwitter(url) {
+function searchTwitter(url, map) {
     $.getJSON(url, function(json) {
         var locations = Array();
         $.each(json.results, function(i, tweet) {
-            $('.entries').append('<li class="entry"><img src="' + tweet.profile_image_url + '" width="48" height="48" />' + tweet.text + '</li>');
-            if (tweet.geo != null) {
-                locations.push(tweet.geo.coordinates);
-            }
+            map.addTweet(tweet);
         });
         $('#locations').append('<p>' + locations + '</p>');
         if (json.next_page != null) {
@@ -13,7 +10,8 @@ function searchtwitter(url) {
             $('#more').show().click(function(e) {
                 e.preventDefault();
                 var params = json.next_page + '';
-                search(searchBase + params + '&callback=?');
+                console.log(searchBase + params + '&callback=?');
+                search(searchBase + params + '&callback=?', map);
             });
         }
         else {
