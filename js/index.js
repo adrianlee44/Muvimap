@@ -1,5 +1,5 @@
-var baseUrl = 'http://search.twitter.com/search.json?callback=?&q=';
 var searchBase = 'http://search.twitter.com/search.json';
+var baseUrl = 'http://search.twitter.com/search.json?callback=?&q=';
 var rtKey = "6gga7w7f7fmmebmuujqg6jdj";
 var RTbaseUrl = "http://api.rottentomatoes.com/api/public/v1.0";
 var movieSearch = RTbaseUrl + "/movies.json?callback=?";
@@ -7,13 +7,12 @@ var movieSearch = RTbaseUrl + "/movies.json?callback=?";
 var FS_client_id = "5AUSSGFLLZICUYW3HG05RZBIGJM4GBDZX3SB5ZWENKVVNRPJ";
 var FS_client_secret = "ZDPED2SBDVSP0QDSURWZTJB3S2NLM3VGJDXF1W4H0DAWPHB2";
 var FS_venueSearch = "https://api.foursquare.com/v2/venues/search"
-
 var rt;
 
 $(document).ready(function() {
     var _GET = getUrlVars();
-    console.log(_GET["q"]);
     var localpos = {};
+    //Somewhere in Kansas
     var latlng = new google.maps.LatLng(39.504041,-96.855469);
     var map = new google.maps.Map(document.getElementById("map_canvas"),{zoom: 4, center:latlng, mapTypeId: google.maps.MapTypeId.ROADMAP});
 
@@ -25,6 +24,7 @@ $(document).ready(function() {
         alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
     }
 
+	// UI code
     inTheaterMovie($("#topMovieBox"));
     $("#ddBtn").click(function(){
         if ($("#topMovieBox").is(':visible')){
@@ -60,11 +60,12 @@ $(document).ready(function() {
 function processMovie(movie, tpos){
     if (tpos.coords==undefined && navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function(pos) {
-            locationBased(movie, pos);
+        	locationBased(movie, pos);
        });
     } else {
-        locationBased(movie, tpos);
+    	locationBased(movie, tpos);
     }
+    
 
     // rotten tomatoes code
     $.getJSON(movieSearch,{
@@ -73,26 +74,27 @@ function processMovie(movie, tpos){
         }, function(data){
             rt = new rottenTomatoes(data);
             rt.init();
-            var box = $("#movieInfo");
-            box.html("");
-            var poster = new Image();
-            poster.src = rt.posters;
-            box.append("<div id='posterScore'><div id='posterImg'></div><div id='scoresInfo'><span id='twitterS'></span><br /><span id='rtS'></span></div><div class='clear'></div></div>");
-            $("#posterImg").append(poster);
-            box.append("<div id='movietName'>" + rt.title + " (" + rt.year + ")</div>");
-            box.append("<div class='small'>"+ rt.synopsis +"</div>")
-            box.append("<div class='medium'>Runtime: " + rt.runtime + " min</div>" )
-            box.append("<div class='medium'>Rating: " + rt.rating + "</div>")
-            box.append("<ul id='castList' class='small'></ul>");
-            var clist = $("#castList");
-            for (var i in rt.mainCast){
-                clist.append("<li>" + rt.mainCast[i]["name"] + " - " + rt.mainCast[i]["characters"][0] + "</li>");
-            }
-            $("#rtS").html("RottenTomates: " + rt.score);
+			showMovieInfo(rt);
         });
+}
 
-    $('#title').show().children('.movieTitle').html(movie);
-    $('#locations').append('<h1>Locations for ' + movie + '</h2>');
+function showMovieInfo(obj){
+    var box = $("#movieInfo");
+    box.html("");
+    var poster = new Image();
+    poster.src = obj.posters;
+    box.append("<div id='posterScore'><div id='posterImg'></div><div id='scoresInfo'><span id='twitterS'></span><br /><span id='rtS'></span></div><div class='clear'></div></div>");
+    $("#posterImg").append(poster);
+    box.append("<div id='movietName'>" + obj.title + " (" + obj.year + ")</div>");
+    box.append("<div class='small'>"+ obj.synopsis +"</div>")
+    box.append("<div class='medium'>Runtime: " + obj.runtime + " min</div>" )
+    box.append("<div class='medium'>Rating: " + obj.rating + "</div>")
+    box.append("<ul id='castList' class='small'></ul>");
+    var clist = $("#castList");
+    for (var i in obj.mainCast){
+        clist.append("<li>" + obj.mainCast[i]["name"] + " - " + obj.mainCast[i]["characters"][0] + "</li>");
+    }
+    $("#rtS").html("RottenTomates: " + obj.score);
 }
 
 function locationBased(query, pos){
@@ -108,23 +110,8 @@ function locationBased(query, pos){
     });
 
     // twitter code
-    $('.movieTitle').append(' near (' + pos.coords.latitude + ', ' + pos.coords.longitude + ')');
     var map = new GoogleMap(document.getElementById("map_canvas"), pos.coords.latitude, pos.coords.longitude);
     var score = new TwitterScore();
     searchTwitter(baseUrl + encodeURI(query) + '&geocode=' + pos.coords.latitude + ',' + pos.coords.longitude + ',20mi', map, score, 20);
 
-}
-
-// Read a page's GET URL variables and return them as an associative array.
-function getUrlVars()
-{
-    var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
-        hash = hashes[i].split('=');
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-    }
-    return vars;
 }

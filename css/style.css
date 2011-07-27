@@ -1,8 +1,11 @@
+html{height: 100%}
+
 body{
     font-family: Arial, Lucida Sans Unicode;
     font-size: 14pt;
     color: #EEE;
     background: #74B5E8;
+    height: 100%;
 }
 
 a{
@@ -81,7 +84,6 @@ a{
 }
 
 #movieInfo{ display: none;}
-
 #movieInfo div{ margin: 5px 0px;}
 
 #miBtnWrapper{

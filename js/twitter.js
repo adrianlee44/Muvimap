@@ -1,26 +1,20 @@
-var wordParserURL="http://landakram.webfactional.com/score?text=";
+var wordParserURL="http://landakram.webfactional.com/score?callback=?";
 
 function searchTwitter(url, map, score, pages) {
     $.getJSON(url, function(json) {
-        var locations = Array();
         $.each(json.results, function(i, tweet) {
-            map.addTweet(tweet);
-            if (tweet.geo != null) {
-                $.getJSON(wordParserURL + encodeURI(tweet.text) + '&callback=?', function(json) {
-                    score.addScore(json);
-                    console.log('Score:' + score.returnScore());
+            if (tweet.geo != null && tweet.text != '' && tweet.text != undefined) {
+            	map.addTweet(tweet);
+                $.getJSON(wordParserURL,{
+                	text: encodeURI(tweet.text)
+                }, function(data) {
+                    score.addScore(data);
                 });
             }
         });
-        $('#locations').append('<p>' + locations + '</p>');
         if (json.next_page != null) {
-            console.log(json.next_page);
             var params = json.next_page + '';
-            console.log(searchBase + params + '&callback=?');
             searchTwitter(searchBase + params + '&callback=?', map, score, pages - 1);
-        }
-        else {
-            $('#more').hide();
         }
     });
 }
@@ -29,7 +23,6 @@ function TwitterScore() {
     var sum = 0;
     var num_tweets = 0;
     this.addScore = function(json) {
-        console.log("JSON SCORE:" + json.score);
         sum += (1-json.score) * 100;
         num_tweets++;
         $("#twitterS").html("Twitter: " + this.returnScore().toFixed(2));
