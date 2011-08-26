@@ -43,9 +43,9 @@ function rottenTomatoes(json){
     self.loadRTreviews = function(url){
         if (url != '' && typeof(url) != undefined){
             $.getJSON(url, function(data){
+                _.reviewNum = data.total;
                 _.scoreMovie(data.reviews);
                 self.reviewJson = self.reviewJson.concat(data.reviews);
-                _.reviewNum = data.total;
                 if (data.links.next!=""){
                     self.loadRTreviews(data.links.next+"&apikey="+_.rtKey+"&callback=?");
                 }
