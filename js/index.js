@@ -19,6 +19,14 @@ $(document).ready(function() {
     if (navigator.geolocation){
         navigator.geolocation.getCurrentPosition(function(pos) {
             localpos = pos;
+            var glatlng = new google.maps.LatLng(pos.coords.latitude, pos.coords.longtitude);
+            $.getJSON("https://maps.googleapis.com/maps/api/place/check-in/json?callback=?",{
+                sensor: false,
+                key: "AIzaSyCJucxSkCzuWapALZ_988NV3M4M7-9PA8c",
+                reference: "CoQBcQAAAO1B0tPeuDWA6b3IExa_LnRbQ5mpbxHAQkAbkQFkTvdr-AVJWNErGzTPmMeGxnxmE6tEvR-kKErI6_F-nHIh5SYYICAIoLbU7Z8YyaWgz3r5qVYzt7sSTAPo6OnFo-YGmYuPTv99dqHk2
+                }, function(data){
+                    console.log(data);
+            });
        });
     } else {
         alert("Your browser does not support geolocation services. We cannot provide you with localized tweets.");
@@ -65,7 +73,7 @@ function processMovie(movie, tpos){
     } else {
     	locationBased(movie, tpos);
     }
-    
+
 
     // rotten tomatoes code
     $.getJSON(movieSearch,{
